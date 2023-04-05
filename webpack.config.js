@@ -3,16 +3,19 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const DotenvWebpackPlugin = require('dotenv-webpack');
 const { ProvidePlugin } = require('webpack');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
+  mode: 'production',
   entry: './src/client/index.ts',
   output: {
-    filename: 'js/bundle.[contenthash].js',
+    filename: 'js/[name].[contenthash].js',
     path: path.resolve(__dirname, 'dist'),
     clean: true,
   },
   resolve: {
     extensions: ['.ts', '.js'],
+    modules: [path.resolve(__dirname, 'src'), 'node_modules'],
   },
   module: {
     rules: [
@@ -52,6 +55,21 @@ module.exports = {
       'window._GLOBAL': [path.resolve(__dirname, 'src/client/polyfills.ts'), 'default'],
     }),
   ],
+  optimization: {
+    minimizer: [new TerserPlugin()],
+    splitChunks: {
+      chunks: 'all',
+      // split any chunk larger than 244 KiB (recommended limit)
+      maxSize: 244 * 1024,
+      cacheGroups: {
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          chunks: 'all',
+        },
+      },
+    },
+  },
   devtool: 'source-map',
   devServer: {
     static: {

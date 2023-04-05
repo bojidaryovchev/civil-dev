@@ -8,7 +8,12 @@
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
     "useDefineForClassFields": false,
-    "sourceMap": true
+    "sourceMap": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "strictNullChecks": true,
+    "removeComments": true,
+    "esModuleInterop": true
   },
   "exclude": ["node_modules"]
 }
