@@ -3,3 +3,6 @@ node_modules
 
 # exclude dist
 dist
+
+# exclude environment variables
+.env
