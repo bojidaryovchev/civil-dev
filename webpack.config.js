@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const DotenvWebpackPlugin = require('dotenv-webpack');
+const { ProvidePlugin } = require('webpack');
 
 module.exports = {
   entry: './src/client/index.ts',
@@ -47,6 +48,9 @@ module.exports = {
       filename: 'css/[name].[contenthash].css',
     }),
     new DotenvWebpackPlugin(),
+    new ProvidePlugin({
+      'window._GLOBAL': [path.resolve(__dirname, 'src/client/polyfills.ts'), 'default'],
+    }),
   ],
   devServer: {
     static: {
