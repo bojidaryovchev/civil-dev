@@ -1,2 +1,2 @@
-export * from './page';
-export * from './parse';
+export * from './page.config';
+export * from './parse.config';
