@@ -1,13 +1,17 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const DotenvWebpackPlugin = require('dotenv-webpack');
 
 module.exports = {
-  entry: './public/js/index.js',
+  entry: './src/client/index.ts',
   output: {
     filename: 'js/bundle.[contenthash].js',
     path: path.resolve(__dirname, 'dist'),
     clean: true,
+  },
+  resolve: {
+    extensions: ['.ts', '.js'],
   },
   module: {
     rules: [
@@ -16,24 +20,39 @@ module.exports = {
         use: 'html-loader',
       },
       {
-        test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+        test: /\.scss$/,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              publicPath: '../',
+            },
+          },
+          'css-loader',
+          'sass-loader',
+        ],
+      },
+      {
+        test: /\.ts$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
       },
     ],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './public/index.html',
+      template: './src/client/index.html',
     }),
     new MiniCssExtractPlugin({
       filename: 'css/[name].[contenthash].css',
     }),
+    new DotenvWebpackPlugin(),
   ],
   devServer: {
     static: {
       directory: path.join(__dirname, 'dist'),
     },
-    watchFiles: ['public/**/*.html', 'public/**/*.css'],
+    watchFiles: ['src/client/**/*.html', 'src/client/**/*.scss'],
     compress: true,
     port: 8080,
     historyApiFallback: true,

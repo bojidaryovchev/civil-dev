@@ -1,1 +1,0 @@
-- files in this folder should not be imported directly in ```index.js``` so that they are tree-shakable
