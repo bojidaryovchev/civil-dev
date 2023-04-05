@@ -52,6 +52,7 @@ module.exports = {
       'window._GLOBAL': [path.resolve(__dirname, 'src/client/polyfills.ts'), 'default'],
     }),
   ],
+  devtool: 'source-map',
   devServer: {
     static: {
       directory: path.join(__dirname, 'dist'),
