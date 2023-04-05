@@ -42,6 +42,6 @@ export class NavComponent extends LitElement {
   }
 
   private signIn(): void {
-    page.redirect('/auth');
+    page('/auth');
   }
 }
