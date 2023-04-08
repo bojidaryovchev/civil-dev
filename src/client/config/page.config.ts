@@ -2,6 +2,8 @@ import { html } from 'lit';
 import page from 'page';
 import { commonLayoutDecorator, baseDecorator } from '../common/page-decorators';
 
+page.base('/civil-dev');
+
 //#region Routes
 page('/', commonLayoutDecorator, (ctx) => {
   ctx.render(html`<app-home></app-home>`);
