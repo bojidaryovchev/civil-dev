@@ -6,7 +6,9 @@
     "build": "cross-env NODE_ENV=production webpack --mode production",
     "start": "cross-env NODE_ENV=development webpack serve --mode development",
     "prettify": "npx prettier --write .",
-    "express": "node ./src/server/index.js"
+    "express": "node ./src/server/index.js",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "license": "MIT",
   "devDependencies": {
@@ -18,6 +20,7 @@
     "css-loader": "6.7.3",
     "css-minimizer-webpack-plugin": "5.0.0",
     "dotenv-webpack": "8.0.1",
+    "gh-pages": "5.0.0",
     "html-loader": "4.2.0",
     "html-webpack-plugin": "5.5.0",
     "mini-css-extract-plugin": "2.7.5",
