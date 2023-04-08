@@ -40,6 +40,7 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     // 2.3.3 Clean the output directory before building
     clean: true,
+    publicPath: process.env.NODE_ENV === 'production' ? '/civil-dev/' : '/',
   },
 
   // 2.4 Configure module resolution
