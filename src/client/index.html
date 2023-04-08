@@ -14,10 +14,10 @@
 
     <script>
       (function () {
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.has('redirect')) {
-          const redirect = urlParams.get('redirect');
-          history.replaceState(null, null, redirect);
+        const redirectPath = sessionStorage.getItem('redirectPath');
+        if (redirectPath) {
+          sessionStorage.removeItem('redirectPath');
+          history.pushState(null, null, redirectPath);
         }
       })();
     </script>
