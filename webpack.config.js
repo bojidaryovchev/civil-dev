@@ -40,6 +40,7 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     // 2.3.3 Clean the output directory before building
     clean: true,
+    // 2.3.4 Set the public path for assets based on the environment
     publicPath: process.env.NODE_ENV === 'production' ? '/civil-dev/' : '/',
   },
 
