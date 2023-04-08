@@ -17,6 +17,9 @@ page('/projects/:id', commonLayoutDecorator, (context) => {
 page('/auth', baseDecorator, (context) => {
   context.render(html`<app-auth .context="${context}"></app-auth>`);
 });
+page('/email-verification-success', baseDecorator, (context) => {
+  context.render(html`<app-email-verification-success .context="${context}"></app-email-verification-success>`);
+});
 page('*', baseDecorator, (context) => {
   context.render(html`<app-not-found .context="${context}"></app-not-found>`);
 });
