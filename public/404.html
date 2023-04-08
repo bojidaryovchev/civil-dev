@@ -6,14 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Redirecting...</title>
     <script>
-      sessionStorage.redirect = location.href;
+      (function () {
+        const redirectTo = location.pathname + location.search + location.hash;
+        const redirectUrl = location.origin + '/civil-dev/index.html?redirect=' + encodeURIComponent(redirectTo);
+        location.replace(redirectUrl);
+      })();
     </script>
   </head>
-  <body>
-    <script>
-      const redirectTo = sessionStorage.redirect ? sessionStorage.redirect : '/';
-      delete sessionStorage.redirect;
-      location.replace(redirectTo);
-    </script>
-  </body>
+  <body></body>
 </html>
