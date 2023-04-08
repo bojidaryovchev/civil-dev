@@ -32,15 +32,15 @@ const executeRender = (content: TemplateResult, strategy: RenderStrategy): void 
   strategy.executeRender(content, rootElement);
 };
 
-export const baseDecorator = (ctx: Context, next: () => void) => {
-  ctx.render = (content: TemplateResult) => {
+export const baseDecorator = (context: Context, next: () => void) => {
+  context.render = (content: TemplateResult) => {
     executeRender(content, new BaseRenderStrategy());
   };
   next();
 };
 
-export const commonLayoutDecorator = (ctx: Context, next: () => void) => {
-  ctx.render = (content: TemplateResult) => {
+export const commonLayoutDecorator = (context: Context, next: () => void) => {
+  context.render = (content: TemplateResult) => {
     executeRender(content, new LayoutRenderStrategy());
   };
   next();

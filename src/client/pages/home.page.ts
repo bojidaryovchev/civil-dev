@@ -1,10 +1,10 @@
 import { LitElement, TemplateResult, css, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import { resetCss } from '../common/reset-css';
+import { withContext, withResetCss } from '../mixins';
 
 @customElement('app-home')
-export class HomePage extends LitElement {
-  static styles = [resetCss, css``];
+export class HomePage extends withContext(withResetCss(LitElement)) {
+  static styles = [css``];
 
   static properties = {};
 

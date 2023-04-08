@@ -1,68 +1,34 @@
 import { LitElement, TemplateResult, css, html } from 'lit';
-import { customElement, query } from 'lit/decorators.js';
-import { initParse } from '../common';
+import { customElement } from 'lit/decorators.js';
+import { createParseFactory, initParse } from '../common';
 import { resetCss } from '../common/reset-css';
+import { withContext, withResetCss } from '../mixins';
 
 @customElement('app-auth')
-export class AuthPage extends LitElement {
+export class AuthPage extends withContext(withResetCss(LitElement)) {
   static styles = [resetCss, css``];
 
   static properties = {};
 
-  @query('#fileInput')
-  fileInput?: HTMLInputElement;
-
-  async upload(): Promise<void> {
-    if (!this.fileInput || !this.fileInput.files || !this.fileInput.files.length) {
-      return;
-    }
-
-    const [file] = Array.from(this.fileInput.files);
-    const parse = await initParse();
-    const parseFile = new parse.File(file.name, file);
-
+  private async signUp(): Promise<void> {
     try {
-      const savedFile = await parseFile.save();
-      // Save file metadata to FileMetaData class
-      const FileMetaData = parse.Object.extend('FileMetaData');
-      const fileMetaData = new FileMetaData();
-      fileMetaData.set('file', savedFile);
-      fileMetaData.set('fileName', file.name);
+      const parse = await initParse();
+      const parseFactory = createParseFactory(parse);
+      const user = parseFactory.createUser('blizz', 'pass', 'blizzcon@gmail.com');
+      const createdUser = await user.signUp();
 
-      await fileMetaData.save();
-
-      console.log(savedFile);
+      console.log(createdUser.getEmail());
     } catch (error) {
-      // handle error
-    }
-  }
-
-  async getFiles(): Promise<void> {
-    const parse = await initParse();
-    const FileMetaData = parse.Object.extend('FileMetaData');
-    const query = new parse.Query(FileMetaData);
-
-    try {
-      const files = await query.find();
-
-      console.log(files);
-
-      files.forEach((fileMetaData) => {
-        const file = fileMetaData.get('file');
-        const fileName = fileMetaData.get('fileName');
-        console.log(`File: ${fileName}, URL: ${file.url()}`);
-      });
-    } catch (error) {
-      // handle error
+      // TODO: handle errors
+      console.log({ ...error });
     }
   }
 
   render(): TemplateResult {
     return html`
       <p>auth</p>
-      <input id="fileInput" type="file" />
-      <button type="button" @click="${this.upload}">Upload</button>
-      <button type="button" @click="${this.getFiles}">Get files</button>
+
+      <button type="button" @click="${this.signUp}">Sign up</button>
     `;
   }
 }

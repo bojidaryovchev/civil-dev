@@ -1,21 +1,24 @@
 import { html } from 'lit';
 import page from 'page';
-import { commonLayoutDecorator, baseDecorator } from '../common/page-decorators';
+import { baseDecorator, commonLayoutDecorator } from '../common';
 
 page.base('/civil-dev');
 
 //#region Routes
-page('/', commonLayoutDecorator, (ctx) => {
-  ctx.render(html`<app-home></app-home>`);
+page('/', commonLayoutDecorator, (context) => {
+  context.render(html`<app-home .context="${context}"></app-home>`);
 });
-page('/projects', commonLayoutDecorator, (ctx) => {
-  ctx.render(html`<app-projects></app-projects>`);
+page('/projects', commonLayoutDecorator, (context) => {
+  context.render(html`<app-projects .context="${context}"></app-projects>`);
 });
-page('/auth', baseDecorator, (ctx) => {
-  ctx.render(html`<app-auth></app-auth>`);
+page('/projects/:id', commonLayoutDecorator, (context) => {
+  context.render(html`<app-project-details .context="${context}"></app-project-details>`);
 });
-page('*', baseDecorator, (ctx) => {
-  ctx.render(html`<app-not-found></app-not-found>`);
+page('/auth', baseDecorator, (context) => {
+  context.render(html`<app-auth .context="${context}"></app-auth>`);
+});
+page('*', baseDecorator, (context) => {
+  context.render(html`<app-not-found .context="${context}"></app-not-found>`);
 });
 //#endregion
 

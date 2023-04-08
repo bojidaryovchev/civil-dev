@@ -1,0 +1,4 @@
+export enum ErrorCode {
+  USERNAME_EMAIL_PAIR_ALREADY_EXISTS = 202,
+  INVALID_SESSION_CODE = 209,
+}

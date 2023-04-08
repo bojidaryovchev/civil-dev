@@ -1,47 +1,38 @@
 import { LitElement, TemplateResult, css, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import { resetCss } from '../common/reset-css';
 import page from 'page';
-
-interface NavItem {
-  title: string;
-  href: string;
-}
+import { withBaseHref } from '../common';
+import { withResetCss } from '../mixins';
+import { NavItem } from '../types';
 
 const navItems: NavItem[] = [
   {
     title: 'Home',
-    href: '/',
+    path: withBaseHref('/'),
   },
   {
     title: 'Projects',
-    href: '/projects',
+    path: withBaseHref('/projects'),
   },
 ];
 
-const renderNavItem = (navItem: NavItem) => html`
-  <li>
-    <a href="${navItem.href}">${navItem.title}</a>
-  </li>
-`;
-
 @customElement('app-nav')
-export class NavComponent extends LitElement {
-  static styles = [resetCss, css``];
+export class NavComponent extends withResetCss(LitElement) {
+  static styles = [css``];
+
+  private signIn(): void {
+    page(withBaseHref('/auth'));
+  }
 
   render(): TemplateResult {
     return html`
       <nav>
         <ul>
-          ${navItems.map((navItem) => renderNavItem(navItem))}
+          ${navItems.map((navItem) => html`<app-nav-item .navItem="${navItem}"></app-nav-item>`)}
         </ul>
 
         <button type="button" @click="${this.signIn}">Sign in</button>
       </nav>
     `;
-  }
-
-  private signIn(): void {
-    page('/auth');
   }
 }
